@@ -30,5 +30,12 @@
   "devDependencies": {
     "node-pre-gyp-github": "^1.4.4",
     "pkg": "^5.8.0"
+  },
+  "binary": {
+    "module_name": "node_gtk",
+    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}/",
+    "remote_path": "./{module_name}/v{version}/",
+    "package_name": "{module_name}-{node_abi}-{platform}-{arch}.tar.gz",
+    "host": "https://node-gtk-1.s3.amazonaws.com"
   }
 }
