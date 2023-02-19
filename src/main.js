@@ -4,6 +4,7 @@
 
 const gi = require('../')
 const Gtk = gi.require('Gtk', '3.0')
+
 const Cairo = gi.require('cairo')
 const Pango = gi.require('Pango')
 const PangoCairo = gi.require('PangoCairo')
