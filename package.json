@@ -8,8 +8,7 @@
     "start": "node ./src/main.js",
     "build": "npx node-pre-gyp build",
     "build:full": "npx node-pre-gyp rebuild",
-    "configure": "npx node-pre-gyp configure --debug"
-
+    "configure": "npx node-pre-gyp configure --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +26,7 @@
     "node-gtk": "^0.11.0"
   },
   "devDependencies": {
+    "node-pre-gyp-github": "^1.4.4",
     "pkg": "^5.8.0"
   }
 }
