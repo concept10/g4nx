@@ -17,7 +17,7 @@ class Window extends Gtk.ApplicationWindow {
     super(app)
     this.focusable = false
     this.setTitle('Node-Gtk Application')
-    this.setDefaultSize(800, 800)
+    this.setDefaultSize(480, 480)
     this.on('destroy', () => this.onDestroy())
 
     // Window initialization here
