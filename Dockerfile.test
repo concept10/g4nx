@@ -1,0 +1,48 @@
+FROM pritunl/archlinux:latest
+
+COPY gjs /gjs
+
+EXPOSE 8085
+
+RUN pacman --noconfirm -S gtk3 xfce4 midori mypaint gedit nautilus gnome-mines htop gcc pkg-config gjs vim
+#toilix
+RUN pacman --noconfirm -S arc-gtk-theme git wget yajl dub dmd terminator
+
+RUN pacman -S --noconfirm --needed base-devel 
+
+RUN pacman -S --noconfirm gnome gnome-extra mate mate-extra
+
+RUN git clone https://github.com/gnunn1/tilix.git; cd tilix; dub build --build=release; ./install.sh
+
+#useradd -m -g user bash user
+
+ENV GDK_BACKEND broadway
+ENV BROADWAY_DISPLAY :5
+
+COPY init.sh /init.sh
+CMD ["/init.sh"]
+
+FROM ubuntu:latest
+
+ENV GDK_BACKEND='broadway'
+ENV BROADWAY_DISPLAY=':5'
+ENV DARK_MODE='false'
+ENV GTK_THEME='Materia'
+ENV BG_GRADIENT="#ddd, #999"
+
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends libgtk-3-0 libgtk-3-bin nginx gettext-base tmux wget materia-gtk-theme papirus-icon-theme
+RUN apt-get clean && apt-get autoclean && rm -rf /var/lib/apt/lists/*
+
+RUN rm -rf /usr/share/themes/Materia && mv /usr/share/themes/Materia-light /usr/share/themes/Materia
+
+RUN wget --no-check-certificate -O /usr/bin/ttyd "https://github.com/tsl0922/ttyd/releases/latest/download/ttyd.$(uname -m)"
+RUN chmod +x /usr/bin/ttyd
+
+COPY start.sh /usr/local/bin/start
+COPY nginx.tmpl /etc/nginx/nginx.tmpl
+COPY terminal-outline.svg /www/data/images/terminal-outline.svg
+EXPOSE 80
+
+# overwrite this with 'CMD []' in a dependent Dockerfile
+CMD ["/usr/local/bin/start"]
